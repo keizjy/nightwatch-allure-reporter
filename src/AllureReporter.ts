@@ -1,11 +1,11 @@
 import { createHash } from "crypto";
 import { NightwatchAllureInterface } from "./NightwatchAllureInterface";
 import * as Models from "./model";
-import { ContentType, LabelName, Stage, Status, StatusDetails } from "./allure/model";
-import { AllureTest } from "./allure/AllureTest";
-import { AllureStep } from "./allure/ExecutableItemWrapper";
-import { AllureGroup } from "./allure/AllureGroup";
-import { AllureRuntime } from "./allure/AllureRuntime";
+import { ContentType, LabelName, Stage, Status, StatusDetails } from "allure-js-commons";
+import { AllureTest } from "allure-js-commons";
+import { AllureStep } from "allure-js-commons";
+import { AllureGroup } from "allure-js-commons";
+import { AllureRuntime } from "allure-js-commons";
 
 export class AllureReporter {
   private suites: AllureGroup[] = [];
@@ -62,7 +62,7 @@ export class AllureReporter {
       throw new Error("No active suite");
     }
     this.currentTest = this.currentSuite.startTest(test.testName);
-    this.currentTest.setEnd(test.timeMs);
+    this.currentTest.endTest(test.timeMs);
     this.currentTest.fullName = test.testName;
     //Adding date and reportPrefix as tags
     const currentDate = new Date();

@@ -1,7 +1,7 @@
-import { ContentType, Status } from "./allure/model";
+import { ContentType, Status } from "allure-js-commons";
 import { AllureReporter } from "./AllureReporter";
-import { StepInterface } from "./allure/Allure";
-import { AllureStep } from "./allure/ExecutableItemWrapper";
+import { StepInterface } from "allure-js-commons";
+import { AllureStep } from "allure-js-commons";
 
 export class StepWrapper {
   constructor(private readonly reporter: AllureReporter, private readonly step: AllureStep) {

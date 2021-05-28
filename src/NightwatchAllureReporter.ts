@@ -3,9 +3,9 @@ import { NightwatchStep, NightwatchTest } from "./model";
 import { AllureReporter } from "./AllureReporter";
 import { NightwatchAllureInterface } from "./NightwatchAllureInterface";
 import fs from "fs";
-import { IAllureConfig } from "./allure/AllureConfig";
-import { AllureRuntime } from "./allure/AllureRuntime";
-import { ContentType, Status } from "./allure/model";
+import { IAllureConfig } from "allure-js-commons";
+import { AllureRuntime } from "allure-js-commons";
+import { ContentType, Status } from "allure-js-commons";
 
 export let allure: NightwatchAllureInterface;
 
@@ -118,38 +118,47 @@ export class NightwatchAllureReporter {
         step.endStep();
       }
 
-      if (currentModule.assertionsCount!=0 && currentModule.assertionsCount === currentModule.passedCount) {
-        //Passed step
-        this.coreReporter.setTestStatus(Status.PASSED);
-        passedCount++;
-      } else if (currentModule.assertionsCount!=0 && currentModule.assertionsCount === currentModule.skippedCount) {
-        //Skipped step
-        this.coreReporter.setTestStatus(Status.SKIPPED);
-        skippedCount++;
-      } else if (currentModule.assertionsCount === currentModule.failedCount) {
-        //Failed step
+      // if (currentModule.assertionsCount!=0 && currentModule.assertionsCount === currentModule.passedCount) {
+      //   //Passed step
+      //   this.coreReporter.setTestStatus(Status.PASSED);
+      //   passedCount++;
+      // } else if (currentModule.assertionsCount!=0 && currentModule.assertionsCount === currentModule.skippedCount) {
+      //   //Skipped step
+      //   this.coreReporter.setTestStatus(Status.SKIPPED);
+      //   skippedCount++;
+      // } else if (currentModule.assertionsCount === currentModule.failedCount) {
+      //   //Failed step
+      //   this.coreReporter.setTestStatus(Status.FAILED);
+      //   failedCount++;
+      // } else {
+      //   //Broken step
+      //   this.coreReporter.setTestStatus(Status.BROKEN);
+      //   partialCount++;
+      // }
+      if (currentTest.isFailure) {
         this.coreReporter.setTestStatus(Status.FAILED);
-        failedCount++;
-      } else {
-        //Broken step
-        this.coreReporter.setTestStatus(Status.BROKEN);
-        partialCount++;
       }
-      if (currentModule.errmessages && currentModule.errmessages.length>0)
+      else if (currentTest.isSkipped) {
+        this.coreReporter.setTestStatus(Status.SKIPPED);
+      }
+      else {
+        this.coreReporter.setTestStatus(Status.PASSED);
+      }
+      if (currentModule.errmessages && currentModule.errmessages.length > 0)
         this.coreReporter.setTestDetailsTrace(currentModule.errmessages.join(","));
       this.coreReporter.completeTest();
       this.coreReporter.endSuite();
     }
-    if (testCount === passedCount)
-      suiteStatus = Status.PASSED;
-    else if (testCount === failedCount)
-      suiteStatus = Status.FAILED;
-    else if (testCount === skippedCount)
-      suiteStatus = Status.SKIPPED;
-    if (this.sendData)
-      done(suiteStatus, testCount, passedCount, failedCount, skippedCount, partialCount);
-    else
-      done();
+    // if (testCount === passedCount)
+    //   suiteStatus = Status.PASSED;
+    // else if (testCount === failedCount)
+    //   suiteStatus = Status.FAILED;
+    // else if (testCount === skippedCount)
+    //   suiteStatus = Status.SKIPPED;
+    // if (this.sendData)
+    //   done(suiteStatus, testCount, passedCount, failedCount, skippedCount, partialCount);
+    // else
+    done();
   }
 
 }

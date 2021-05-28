@@ -1,11 +1,11 @@
 import { AllureReporter } from "./AllureReporter";
-import { Allure, StepInterface } from "./allure/Allure";
-import { isPromise } from "./allure/isPromise";
-import { ContentType, Status } from "./allure/model";
+import { Allure, StepInterface } from "allure-js-commons";
+import { isPromise } from "allure-js-commons";
+import { ContentType, Status } from "allure-js-commons";
 import { StepWrapper } from "./StepWrapper";
-import { AllureTest } from "./allure/AllureTest";
-import { AllureStep, ExecutableItemWrapper } from "./allure/ExecutableItemWrapper";
-import { AllureRuntime } from "./allure/AllureRuntime";
+import { AllureTest } from "allure-js-commons";
+import { AllureStep, ExecutableItemWrapper } from "allure-js-commons";
+import { AllureRuntime } from "allure-js-commons";
 
 export class NightwatchAllureInterface extends Allure{
     constructor(private readonly reporter: AllureReporter, runtime: AllureRuntime) {
